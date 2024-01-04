@@ -1,0 +1,54 @@
+﻿@page "/EmployeeOverview"
+
+<h1 class="page-title"> All Employee </h1>
+
+@if (Employees == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Employee Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Employees)
+            {
+                <tr>
+                   @*@<td><img src="@($"https://gillcleerenpluralsight.blob.core.windows.net/person/{employee.EmployeeId}-small.jpg")" class="rounded-circle" /></td>*@
+                    <td><img src="@employee.ImageName" width="50" height="50" style="border-radius:50%"/></td>
+
+                   <td>@employee.EmployeeId</td>
+                    <td>@employee.FirstName</td>
+                    <td>@employee.LastName</td>
+                    <td>
+                        <a href="@($"employeedetail/{employee.EmployeeId}")" class="btn btn-primary table-btn">
+
+
+                            <span class="material-symbols-outlined">
+                                info
+                            </span>
+                        </a>
+                        <a href="@($"employeeedit/{employee.EmployeeId}")" class="btn btn-primary table-btn">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </a>
+                       
+                    </td>
+
+                </tr>
+                
+            }
+        </tbody>
+    </table>
+}
+<button @onclick="QuickAddEmployee" class="btn btn-dark table-btn quick-add-btn">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
+<AddEmployeeDialog @ref="AddEmployeeDialog" CloseEventCallback="@AddEmployeeDialog_OnDialogClose"></AddEmployeeDialog>

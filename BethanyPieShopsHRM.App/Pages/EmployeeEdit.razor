@@ -1,0 +1,256 @@
+﻿@page "/employeeedit"
+@page "/employeeedit/{EmployeeId}"
+
+@using BethanysPieShopHRM.Shared
+
+@if (!Saved)
+{
+    <section class="employee-edit">
+        <h1 class="page-title">Details for @Employee.FirstName @Employee.LastName</h1>
+        <br/>
+        <EditForm Model="@Employee" OnValidSubmit="@HandleValidSubmit"
+                  OnInvalidSubmit="@HandleInvalidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary></ValidationSummary>
+            <div class="form-group row" style="width:100%;display:flex;align-items:center">
+              <div style="width:13.5%">
+                    <label for="image">Select image: </label>
+                </div>
+                <div style="width:86.5%">
+               <InputFile OnChange="OnInputFileChange" />
+                </div>
+           </div>
+           <br/>
+            <div class="form-group row">
+                
+                <span>
+                    <label for="lastName" class="m-label">Last name: </label>
+                <InputText id="lastName"  class="m-div" @bind-Value="@Employee.LastName" placeholder="Enter last name"></InputText>
+                <ValidationMessage class="offset-sm-3 " For="@(() => Employee.LastName)" />
+            </span>
+                </div>
+                <br/>
+            <div class="form-group row">
+                <span>
+                    <label for="firstName" class="m-label">First name: </label>
+                    <InputText id="firstName" class="m-div" @bind-Value="@Employee.FirstName" placeholder="Enter first name"></InputText>
+                <ValidationMessage class="offset-sm-3 " For="@(() => Employee.FirstName)" />
+            </span>
+                </div>
+
+                <br/>
+            <div class="form-group row">
+                <span><label for="birthdate" class="m-label">Birthdate: </label>
+                <InputDate id="birthdate" class="m-div" @bind-Value="@Employee.BirthDate" placeholder="Enter birthdate"></InputDate>
+
+                </span>
+            </div>
+            <br />
+            <div class="form-group row">
+                <span><label for="email" class="m-label">Email: </label>
+                <InputText id="email" class="m-div " @bind-Value="@Employee.Email" placeholder="Enter email"></InputText>
+                <ValidationMessage class="offset-sm-3 " For="@(() => Employee.Email)" />
+            </span>
+                </div>
+            <br />
+            <div class="form-group row">
+                <span><label for="street" class="m-label">Street: </label>
+                <InputText id="street" class="m-div " @bind-Value="@Employee.Street" placeholder="Enter street"></InputText>
+
+                </span>
+            </div>
+            <br />
+            <ValidationMessage class="offset-sm-3 " For="@(() => Employee.Street)" />
+
+            <div class="form-group row">
+               <span> <label for="zip" class="m-label">Zip code: </label>
+                <InputText id="zip" class="m-div " @bind-Value="@Employee.Zip" placeholder="Enter zip code"></InputText>
+                 <ValidationMessage class="offset-sm-3 " For="@(() => Employee.Zip)" />
+                </span>
+            </div> <br />
+
+            <div class="form-group row">
+                <span><label for="city" class="m-label">City: </label>
+                <InputText id="city" class="m-div " @bind-Value="@Employee.City" placeholder="Enter City" ></InputText>
+            </span></div>
+            <br />
+
+            <div class="form-group row">
+                <span><label for="country" class="m-label">Country: </label>
+                <InputSelect id="country" class="m-div " @bind-Value="@CountryId">
+                    @foreach (var country in Countries)
+              
+                    {
+                        <option value="@country.CountryId">@country.Name</option>
+                    }
+                    </InputSelect>
+                </span>
+            </div> <br />
+
+            <div class="form-group row">
+                <span><label for="phonenumber" class="m-label">Phone number: </label>
+                <InputText id="phonenumber" class="m-div " @bind-Value="@Employee.PhoneNumber" placeholder="Enter phone number"></InputText>
+               
+            </span>
+            </div> <br />
+
+            <div class="form-group row">
+                <span><label for="longitude" class="m-label">Longitude: </label>
+                <InputNumber id="longitude" class="m-div " @bind-Value="@Employee.Longitude"></InputNumber>
+                </span>
+            </div> <br />
+           
+
+            <div class="form-group row">
+                <span><label for="latitude" class="m-label">Latitude: </label>
+                <InputNumber id="latitude" class="m-div " @bind-Value="@Employee.Latitude"></InputNumber>
+                </span>
+            </div>
+
+            <br />
+            <div class="form-group row" style="width:100%;display:flex;align-items:center">
+                <div style="width:13.5%">
+                    <label for="smoker">
+                        Smoker
+                    </label>
+                </div>
+                <div style="width:86.5%">
+                    <InputCheckbox id="smoker" style="height:16px;" @bind-Value="@Employee.Smoker"></InputCheckbox>
+               
+                    </div>
+                
+            </div>
+
+            <div class="form-group row">
+                <span><label for="jobcategory" class="m-label">Job category: </label>
+                <InputSelect id="jobcategory" class="m-div " @bind-Value="@JobCategoryId">
+                    @foreach (var jobCategory in JobCategories)
+               
+                    {
+                        <option value="@jobCategory.JobCategoryId">@jobCategory.JobCategoryName</option>
+                    }
+                    </InputSelect>
+                </span>
+            </div> <br />
+
+            <div style="width:100%;display:flex;align-items:center"  class="form-group row" >
+               
+                @*@<InputSelect id="gender" class="m-div " @bind-Value=@Employee.Gender>
+                    <option value="@(Gender.Male)">Male</option>
+                    <option value="@(Gender.Female)">Female</option>
+                    <option value="@(Gender.Other)">Other</option>
+                </InputSelect>
+            <InputRadioGroup Name="genderRadioGroup" @bind-Value="@Employee.Gender">
+            <label class="col-form-label col-md-3">Gender: </label>
+            <div class="col-md-8">
+            @foreach (var gender in (Gender[])Enum.GetValues(typeof(Gender)))
+            {
+            <InputRadio Name="genderRadioGroup" Value="gender" class="form-check-input" />
+            <label class="form-check-label">
+            @gender
+            </label>
+            <br />
+            }
+            </div>
+            </InputRadioGroup>*@
+                <br />
+                  
+                <InputRadioGroup Name="genderRadioGroup" @bind-Value="@Employee.Gender">
+                    <div style="width:13.5%">
+                        <label>Gender:&nbsp;&nbsp;&nbsp; </label>
+
+                    </div>
+                  
+                  <div style="width:86.5%">
+                        
+                        @foreach (var gender in (Gender[])Enum.GetValues(typeof(Gender)))
+                        {
+                            <InputRadio Name="genderRadioGroup" Value="gender" class="form-check-input" />
+                            <label class="form-check-label">
+                                @gender&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </label>
+                            
+                        }
+                        </div>
+               
+                </InputRadioGroup>
+               </div>
+            <br/>
+            <div class="form-group row" style="width:100%;display:flex;align-items:center">
+                <br />
+                    <InputRadioGroup Name="MartialRadioGroup" @bind-Value="@Employee.MaritalStatus">
+                        <div style="width:13.5%">
+                        <label>Martial Status: </label>
+                        </div>
+                        
+
+                        <div style="width:86.5%">
+                            @foreach (var martial in (MaritalStatus[])Enum.GetValues(typeof(MaritalStatus)))
+                            {
+                                <InputRadio Name="MartialRadioGroup" Value="martial" class="form-check-input" />
+                                <label class="form-check-label">
+                                    @martial&nbsp;&nbsp;&nbsp;&nbsp;
+                                </label>
+
+                            }
+                        </div>
+                    </InputRadioGroup>
+                
+            </div>
+            <br/>
+            <div class="form-group row">
+                <span><label for="joineddate" class="m-label">Joined on: </label>
+                <InputDate id="joineddate" class="m-div " @bind-Value="@Employee.JoinedDate" placeholder="Enter date joined"></InputDate>
+                </span>
+            </div>
+            <br />
+
+            <div class="form-group row">
+                <span><label for="exitdate" class="m-label">Left on: </label>
+                <InputDate id="exitdate" class="m-div " @bind-Value="@Employee.ExitDate" placeholder="Enter exit date"></InputDate>
+                </span>
+            </div>
+            <br /><div class="form-group row" style="width:100%;display:flex;align-items:center">
+            
+                <div id="d" style="width:13%">
+                        <label for="comment" id="l" style="width:100%;" >Comment</label>
+                    </div>
+           <div style="width:87%">
+              
+                    <InputTextArea style="overflow-x:auto;overflow-y:auto;margin-left:5px;width:98%"id="comment" @bind-Value="@Employee.Comment" placeholder="Enter comment"></InputTextArea>
+                        <ValidationMessage class="offset-sm-3 " For="@(() => Employee.Comment)" />
+                    </div>
+            
+               </div>
+                <br/>
+                <div style="width:100%;display:flex;align-items:center">
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                    <div style="width:20%">
+                    <br />
+                    <button type="submit" style="width:100%" class="btn btn-primary edit-btn">Save employee</button>
+                </div>  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            @if (Employee.EmployeeId > 0)
+                {
+                    <div style="width:20%">
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <a class="btn btn-danger" style="width:100%" @onclick="@DeleteEmployee">
+                    &nbsp; &nbsp;Delete
+                    </a>
+                   
+                    </div>
+                }  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <div style="width:20%">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="btn btn-outline-primary" style="width:100%" @onclick="@NavigateToOverview">Back to overview</a>
+                </div>
+            </div>
+        </EditForm>
+    </section>
+
+}
+else
+{
+    <div class="alert @StatusClass">@Message</div>
+
+
+}

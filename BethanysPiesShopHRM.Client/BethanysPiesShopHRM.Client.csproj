@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\BethanyPieShopsHRM.App\BethanyPieShopsHRM.App.csproj" />
+		<ProjectReference Include="..\BethanysPieShopHRM.ComponentsLibrary\BethanysPieShopHRM.ComponentsLibrary.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+
+		<BlazorWebAssemblyLazyLoad Include="BethanysPieShopHRM.ComponentsLibrary.dll"></BlazorWebAssemblyLazyLoad>
+
+	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.25" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.25" PrivateAssets="all" />
+    <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
+  </ItemGroup>
+	
+	
+ 
+
+</Project>
