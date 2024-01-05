@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+	  <OutputPath>bin\gh-pages\BethanysPiesShopHRM.Client\wwwroot\</OutputPath>
   </PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\BethanyPieShopsHRM.App\BethanyPieShopsHRM.App.csproj" />
